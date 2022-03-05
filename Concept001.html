@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>10k</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+    img {
+        object-fit:contain;
+        position: absolute;
+        text-align: center;
+        margin-top: 20;
+        width:  100vw;
+        height:  100vh;
+    }
+    </style>
+</head>
+
+<body id="body">
+
+<canvas id="canvas" width="500" height="500"></canvas>
+
+<script>
+
+//Random Integer function
+function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+          };
+
+const canvas = document.querySelector('canvas');
+const ctx = canvas.getContext("2d");
+canvas.width = 500;
+canvas.height = 500;
+
+var background_array = new Array (
+    'grey',
+    'blue',
+    'red',
+    'yellow',
+    'lime',
+    'green',
+    'purple',
+    'brown',
+    'darkRed',
+    'gold'
+    )
+
+ctx.beginPath();
+ctx.rect(0,0,500,500);
+ctx.fillStyle = background_array[getRandomInt(0,9)]
+ctx.fill();
+
+
+var layer1_array = new Array (
+    './layer2_jackets/jacket1.png',
+    './layer2_jackets/jacket2.png'
+    )
+
+var layer2_array = new Array (
+    './NapoleonHead/NapoleonHead2.png',
+    )
+
+var layer3_array = new Array (
+    './layer1_shirts/shirt1.png',
+    './layer1_shirts/shirt2.png'
+    )
+
+var layer4_array = new Array (
+    './layer3_hats/hats1.png',
+    './layer3_hats/noHats.png'
+    )
+
+var layer5_array = new Array (
+    './Layer4_moustache/moustache1.png',
+    './Layer4_moustache/noMoustache.png'
+    )
+
+        l1 = layer1_array[getRandomInt(0,1)];
+        l2 = layer2_array[getRandomInt(0,0)];
+        l3 = layer3_array[getRandomInt(0,1)];
+        l4 = layer4_array[getRandomInt(0,1)];
+        l5 = layer5_array[getRandomInt(0,1)]; 
+
+let arrayImage = [l1,l2,l3,l4,l5];
+
+const innerImage = (index) => {
+        const image = new Image(canvas.width, canvas.height);
+        image.onload = function () {
+            ctx.drawImage(image, 0, 0);
+        };
+            image.style.decoding = 'async';
+            image.src = arrayImage[index];
+    };
+      
+async function layering() {
+        await innerImage(0);
+        await innerImage(1);
+        await innerImage(2);
+        await innerImage(3);
+        await innerImage(4);
+        };
+layering();
+
+//Event Listener for Click
+      canvas.addEventListener(
+        "click",
+        function (event) {
+
+          if (!event.target.matches('.canvas')) {
+
+        location.reload();
+          }
+
+        },
+        false
+      );
+
+    </script>
+
+
+</body></html>
